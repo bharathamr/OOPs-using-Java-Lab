@@ -1,0 +1,802 @@
+/*4b 1.*/
+import java.util.*;
+class Person
+{
+	private String name,address;
+
+	public Person(String name,String address)
+	{
+		this.name = name;
+		this.address = address;
+	}
+
+	public String getName()
+	{
+		return name;
+	} 
+
+	public String getAddress()
+	{
+		return address;
+	}
+
+	public void setAddress(String address)
+	{
+		this.address = address;
+	}
+}
+
+class Employee extends Person
+{
+	private String dept;
+	private int basic,empid;
+	
+	public Employee(String name,String address,int empid,String dept,int basic)
+	{
+		super(name,address);
+		this.empid = empid;
+		this.dept = dept;
+		this.basic = basic; 
+	}
+
+	public int getEmpid()
+	{
+		return empid;
+	}
+
+	public String getDept()
+	{
+		return dept;
+	}
+
+	public void setDept(String dept)
+	{
+		this.dept = dept;
+	}
+
+	public void setBasic(int basic)
+	{
+		this.basic = basic;
+	}
+
+	public int getBasic()
+	{
+		return basic;
+	}
+
+	public float calSalary()
+	{
+		return basic;
+	}
+}
+
+class Faculty extends Employee
+{
+	private String designation,course;
+	
+	public Faculty(String name,String address,int empid,String dept,int basic,String designation,String course)
+	{
+		super(name,address,empid,dept,basic);
+		this.designation = designation;
+		this.course = course;
+	}
+
+	public String getDesig()
+	{
+		return designation;
+	}
+
+	public void setDesig(String designation)
+	{
+		this.designation = designation;
+	}
+
+	public void setCourse(String course)
+	{
+		this.course = course;
+	}
+
+	public String getCourse()
+	{
+		return course;
+	}
+
+	public float calSalary()
+	{
+		return super.calSalary();
+		
+	}
+}
+
+interface Student
+{
+	public float[] getMarks();
+	public float calcGPA();
+}
+
+class TeachingAssitant extends Employee implements Student
+{
+	private String project;
+	private String course;
+	private float []marks = new float[5];
+
+	public TeachingAssitant(String name,String address,int empid,String dept,int basic,String project,String course,float []marks)
+	{
+		super(name,address,empid,dept,basic);
+		this.project = project;
+		this.course = course;
+		for(int i=0;i<5;i++)
+			this.marks[i] = marks[i];
+	}
+
+	public String getProject()
+	{
+		return project;
+	}
+
+	public String getCourse()
+	{
+		return course;
+	}
+
+	public void setCourse(String course)
+	{
+		this.course = course;
+	}
+
+	public float[] getMarks()
+	{
+		return marks;
+	}
+
+	public float calcGPA()
+	{
+		float s = 0;
+		for(int i=0;i<marks.length;i++)
+			s += marks[i];
+		return s;
+	}
+
+	public float calSalary()
+	{
+		return super.calSalary();
+	}
+
+}
+
+class testdriver
+{
+ 	public static void main(String []args)
+	{
+	Scanner input = new Scanner(System.in);
+	Person []obj = new Person[100];
+        int cont,j=0,i=1,change = 0;
+	int []arr = new int[100];
+        do
+        {
+		String name,dept,address;
+		int id,basic,choice;
+        	System.out.print("Enter your name : ");
+		name = input.next();
+		System.out.print("Enter your address : ");
+		address = input.next();
+		System.out.print("Enter your id : ");
+		id = input.nextInt();
+		System.out.print("Enter your dept : ");
+		dept = input.next();
+		System.out.print("Enter your basic pay : ");
+		basic = input.nextInt();
+                System.out.print("Enter your designation as \n1:Faculty\n2:Teaching assistant\nyour choice : ");
+                choice = input.nextInt();
+		arr[++j] = choice;
+		switch(choice)
+		{
+			case 1:{
+					
+					String desig,cou;
+					System.out.print("Enter your designation : ");
+					desig = input.next();
+					System.out.print("Enter your course : ");
+					cou = input.next();
+					obj[i] = new Faculty(name,address,id,dept,basic,desig,cou);
+					System.out.print("To change enter 1: address 2: dept 3: basic 4:course 5:designation : ");
+					change = input.nextInt();
+					switch(change)
+					{
+						case 1:{
+							String a;
+							System.out.print("Enter your new address : ");
+							a = input.next();							
+							obj[i].setAddress(a);
+							break;
+							}
+						case 2:{
+							String a;
+							System.out.print("Enter your new dept : ");
+							a = input.next();
+							((Employee)obj[i]).setDept(a);
+							break;
+							}
+						case 3:{
+							int a;
+							System.out.print("Enter your new basic : ");
+							a = input.nextInt();							
+							((Employee)obj[i]).setBasic(a);
+							break;
+							}
+						case 4:{
+							String a;
+							System.out.print("Enter your new course : ");
+							a = input.next();
+							((Faculty)obj[i]).setCourse(a);
+							break;
+							}
+						case 5:{
+							String a;
+							System.out.print("Enter your new designation : ");
+							a = input.next();
+							((Faculty)obj[i]).setDesig(a);
+							break;
+							}
+					}
+					i++;
+					break;
+				}
+
+			case 2:{
+					
+					String pro,cou;
+					float []marks = new float[5];
+					System.out.print("Enter your project : ");
+					pro = input.next();
+					System.out.print("Enter your course : ");
+					cou = input.next();
+					for(int k=0;k<5;k++)
+					{
+						System.out.print("Enter your mark in subject"+(k+1)+" : ");
+						marks[k] = input.nextFloat();
+					}
+					obj[i] = new TeachingAssitant(name,address,id,dept,basic,pro,cou,marks);
+					System.out.print("To change enter 1: address 2: dept 3: basic 4:course : ");
+					change = input.nextInt();
+					switch(change)
+					{
+						case 1:{String a;
+							System.out.print("Enter your new address : ");
+							a = input.next();							
+							obj[i].setAddress(a);
+							break;
+							}
+						case 2:{String a;
+							System.out.print("Enter your new dept : ");
+							a = input.next();
+							((Employee)obj[i]).setDept(a);
+							break;
+							}
+						case 3:{int a;
+							System.out.print("Enter your new basic : ");
+							a = input.nextInt();							
+							((Employee)obj[i]).setBasic(a);
+							break;
+							}
+						case 4:{
+							String a;
+							System.out.print("Enter your new course : ");
+							a = input.next();
+							((TeachingAssitant)obj[i]).setCourse(a);
+							break;
+							}
+					}
+					i++;
+					break;
+				}
+		}
+		System.out.print("Enter 1 : to continue 0 : to exit : ");
+		cont = input.nextInt();
+	}while(cont != 0);
+
+	for(int k=1;k<i;k++)
+	{
+		if(arr[k] == 1)
+		{
+			System.out.println("Name : "+obj[k].getName()+"\nAddress : "+obj[k].getAddress()+"\nEmp id : "+(((Employee)obj[k]).getEmpid())+"\nDept : "+(((Employee)obj[k]).getDept())+"\nBasic Pay: "+(((Employee)obj[k]).getBasic())+"\nDesignation : "+(((Faculty)obj[k]).getDesig())+"\ncourse : "+(((Faculty)obj[k]).getCourse())+"\nsalary : "+(((Faculty)obj[k]).calSalary()));
+			System.out.println("\n");
+
+		}
+		else
+		{
+			System.out.print("Name : "+obj[k].getName()+"\nAddress : "+obj[k].getAddress()+"\nEmp id : "+(((Employee)obj[k]).getEmpid())+"\nDept : "+(((Employee)obj[k]).getDept())+"\nBasic Pay: "+(((Employee)obj[k]).getBasic())+"\nProject : "+(((TeachingAssitant)obj[k]).getProject())+"\ncourse : "+(((TeachingAssitant)obj[k]).getCourse())+"\nGPA : "+(((TeachingAssitant)obj[k]).calcGPA()));
+			float []submarks = ((TeachingAssitant)obj[k]).getMarks();
+			for(int l=0;l<5;l++)
+				System.out.print("\nMark in "+(l+1)+" : "+submarks[l]);
+			System.out.println("\n\n");
+		}
+
+	}
+	}
+}
+/*
+output:
+
+Enter your name : Bharath
+Enter your address : chennai
+Enter your id : 1800
+Enter your dept : CSE 
+Enter your basic pay : 10000
+Enter your designation as 
+1:Faculty
+2:Teaching assistant
+your choice : 1
+Enter your designation : Assistantprofessor
+Enter your course : BE
+To change enter 1: address 2: dept 3: basic 4:course 5:designation : 3
+Enter your new basic : 20000
+Enter 1 : to continue 0 : to exit : 1
+Enter your name : kumar
+Enter your address : kanchipuram
+Enter your id : 1300
+Enter your dept : IT
+Enter your basic pay : 15000
+Enter your designation as 
+1:Faculty
+2:Teaching assistant
+your choice : 2
+Enter your project : watermanagement
+Enter your course : ME
+Enter your mark in subject1 : 98
+Enter your mark in subject2 : 97
+Enter your mark in subject3 : 96
+Enter your mark in subject4 : 95
+Enter your mark in subject5 : 90
+To change enter 1: address 2: dept 3: basic 4:course : 4
+Enter your new course : BE
+Enter 1 : to continue 0 : to exit : 0
+Name : Bharath
+Address : chennai
+Emp id : 1800
+Dept : CSE
+Basic Pay: 20000
+Designation : Assistantprofessor
+course : BE
+salary : 20000.0
+
+
+Name : kumar
+Address : kanchipuram
+Emp id : 1300
+Dept : IT
+Basic Pay: 15000
+Project : watermanagement
+course : BE
+GPA : 476.0
+Mark in 1 : 98.0
+Mark in 2 : 97.0
+Mark in 3 : 96.0
+Mark in 4 : 95.0
+Mark in 5 : 90.0
+
+
+*/
+
+/*4b 2.*/
+import java.util.*;
+abstract class Shape
+{
+    protected String color = "red";
+    public Shape()
+    {
+        setColor(this.color);
+    }
+    public Shape(String color)
+    {
+        setColor(color);
+    }
+    public String getColor()
+    {
+        return this.color;
+    }
+    public void setColor(String color)
+    {
+        this.color = color;
+    }
+    abstract float getArea();
+    abstract float getPerimeter();
+}
+
+class Circle extends Shape
+{
+    protected float radius = 1.0f;
+    public Circle()
+    {
+       setRadius(this.radius);
+    }
+    public Circle(float radius)
+    {
+       setRadius(radius);
+    }
+    public Circle(float radius,String color)
+    {
+       super(color);
+       setRadius(radius);
+    }
+    public float getRadius()
+    {
+       return radius;
+    }
+    public void setRadius(float radius)
+    {
+       this.radius = radius;
+    }
+    public float getArea()
+    {
+       return (3.14f*radius*radius);
+    }
+    public float getPerimeter()
+    {
+       return (2*3.14f*radius);
+    }
+}
+
+class Rectangle extends Shape
+{
+    protected float width = 1.0f;
+    protected float length = 1.0f;
+    public Rectangle()
+    {
+       setWidth(this.width);
+       setLength(this.length);
+    }
+    public Rectangle(float width,float length)
+    {
+       setWidth(width);
+       setLength(length);
+    }
+    public Rectangle(float width,float length,String color)
+    {
+       super(color);
+       setWidth(width);
+       setLength(length);
+    }
+    public float getWidth()
+    {
+       return this.width;
+    }
+    public void setWidth(float width)
+    {
+       this.width = width;
+    }
+    public float getLength()
+    {
+       return this.length;
+    }
+    public void setLength(float length)
+    {
+        this.length = length;
+    }
+    public float getArea()
+    {
+        return length*width;
+    }
+    public float getPerimeter()
+    {
+        return 2*getArea();
+    }
+}
+
+class Square extends Rectangle
+{
+    float side;
+    public Square()
+    {
+        this.color = "red";
+    }
+    public Square(float side)
+    {
+        setSide(side);
+    }
+    public Square(float side,String color)
+    {
+         super(side,side,color);
+         this.side = side;
+    }
+    public float getSide()
+    {
+         return side;
+    }
+    public void setSide(float side)
+    {
+         this.side = side;
+    }
+    public float getArea()
+    {
+         return (side*side);
+    }
+    public float getPerimeter()
+    {
+         return (4*side);
+    }
+}
+
+class testdriv
+{
+  public static void main(String []args)
+  {
+
+     Scanner input = new Scanner(System.in);
+     int cont = 1,s;
+     Shape []obj = new Shape[100];
+     int i=0;
+     do
+     {
+         System.out.print("Enter the shape\t1:Circle\t2:Rectangle\t3:Square : ");
+         s = input.nextInt();
+         switch(s)
+         {
+         	case 1:{
+                          String color;
+                          float radius;
+                          System.out.println("No Argument constructor");
+                          obj[i] = new Circle();
+                          System.out.println("Color : "+obj[i].getColor()+"\nRadius :"+((Circle)obj[i]).getRadius()+"\nArea : "+(((Circle)obj[i]).getArea())+"\nPerimeter : "+(((Circle)obj[i]).getPerimeter()));
+
+                          System.out.println("Single Argument constructor");
+                          System.out.print("Enter the radius : ");
+                          radius = input.nextFloat();
+                          obj[i] = new Circle(radius);
+                          System.out.println("Color : "+obj[i].getColor()+"\nRadius :"+((Circle)obj[i]).getRadius()+"\nArea : "+(((Circle)obj[i]).getArea())+"\nPerimeter : "+(((Circle)obj[i]).getPerimeter()));
+                           
+                          System.out.println("Double Argument constructor");
+                          System.out.print("Enter the radius : ");
+                          radius = input.nextFloat();
+                          System.out.print("Enter the color : ");
+                          color = input.next();
+                          obj[i] = new Circle(radius,color);
+                          System.out.println("Color : "+obj[i].getColor()+"\nRadius :"+((Circle)obj[i]).getRadius()+"\nArea : "+(((Circle)obj[i]).getArea())+"\nPerimeter : "+(((Circle)obj[i]).getPerimeter()));
+
+                          System.out.print("Changes Enter 1:color\t2:Radius\t3:exit : ");
+           int f;
+           f = input.nextInt();
+           switch(f)
+           {
+               case 1:{
+                         String m;
+                         System.out.print("Enter the change color");
+                         m = input.next();
+                         obj[i].setColor(m);
+                         System.out.println("Changed");
+                          System.out.println("Color : "+obj[i].getColor()+"\nRadius :"+((Circle)obj[i]).getRadius()+"\nArea : "+(((Circle)obj[i]).getArea())+"\nPerimeter : "+(((Circle)obj[i]).getPerimeter()));
+                         break;
+                      }
+                case 2:{
+                         float m;
+                         System.out.print("Enter the change radius");
+                         m = input.nextFloat();
+                         ((Circle)obj[i]).setRadius(m);
+                         System.out.println("Changed");
+                         System.out.println("Color : "+obj[i].getColor()+"\nRadius :"+((Circle)obj[i]).getRadius()+"\nArea : "+(((Circle)obj[i]).getArea())+"\nPerimeter : "+(((Circle)obj[i]).getPerimeter()));
+                         break;
+                      }
+                case 3:{break;}
+                
+
+           }
+           break;
+                        }
+                 case 2:{
+                          String color;
+                          float width,length;
+                          System.out.println("No Argument constructor");
+                          obj[i] = new Rectangle();
+                          System.out.println("Color : "+obj[i].getColor()+"\nWidth :"+((Rectangle)obj[i]).getWidth()+"\nLength :"+((Rectangle)obj[i]).getLength()+"\nArea : "+(((Rectangle)obj[i]).getArea())+"\nPerimeter : "+(((Rectangle)obj[i]).getPerimeter()));
+                         
+                          System.out.println("Double Argument constructor");
+                          System.out.print("Enter the Width : ");
+                          width = input.nextFloat();
+                          System.out.print("Enter the length : ");
+                          length = input.nextFloat();
+                          obj[i] = new Rectangle(width,length);
+                          System.out.println("Color : "+obj[i].getColor()+"\nWidth :"+(((Rectangle)obj[i]).getWidth())+"\nLength :"+(((Rectangle)obj[i]).getLength())+"\nArea : "+(((Rectangle)obj[i]).getArea())+"\nPerimeter : "+(((Rectangle)obj[i]).getPerimeter()));
+
+                          System.out.println("Triple Argument constructor");
+                          System.out.print("Enter the Width : ");
+                          width = input.nextFloat();
+                          System.out.print("Enter the length : ");
+                          length = input.nextFloat();
+                          System.out.print("Enter the color : ");
+                          color = input.next();
+                          obj[i] = new Rectangle(width,length,color);
+                          System.out.println("Color : "+obj[i].getColor()+"\nWidth :"+(((Rectangle)obj[i]).getWidth())+"\nLength :"+(((Rectangle)obj[i]).getLength())+"\nArea : "+(((Rectangle)obj[i]).getArea())+"\nPerimeter : "+(((Rectangle)obj[i]).getPerimeter()));
+                                          System.out.print("Changes Enter 1:color\t2:width\t3:length\t4:exit : ");
+           int f;
+           f = input.nextInt();
+           switch(f)
+           {
+               case 1:{
+                         String m;
+                         System.out.print("Enter the change color");
+                         m = input.next();
+                         obj[i].setColor(m);
+                         System.out.println("Changed");
+                         System.out.println("Color : "+obj[i].getColor()+"\nWidth :"+(((Rectangle)obj[i]).getWidth())+"\nLength :"+(((Rectangle)obj[i]).getLength())+"\nArea : "+(((Rectangle)obj[i]).getArea())+"\nPerimeter : "+(((Rectangle)obj[i]).getPerimeter()));
+      break;
+                      }
+                case 2:{
+                         float m;
+                         System.out.print("Enter the change Width");
+                         m = input.nextFloat();
+                         ((Rectangle)obj[i]).setWidth(m);
+                           System.out.println("Changed");
+                         System.out.println("Color : "+obj[i].getColor()+"\nWidth :"+(((Rectangle)obj[i]).getWidth())+"\nLength :"+(((Rectangle)obj[i]).getLength())+"\nArea : "+(((Rectangle)obj[i]).getArea())+"\nPerimeter : "+(((Rectangle)obj[i]).getPerimeter()));
+                         break;
+                      }
+                case 3:{
+                         float m;
+                         System.out.print("Enter the change length");
+                         m = input.nextFloat();
+                         ((Rectangle)obj[i]).setLength(m);
+                           System.out.println("Changed");
+                         System.out.println("Color : "+obj[i].getColor()+"\nWidth :"+(((Rectangle)obj[i]).getWidth())+"\nLength :"+(((Rectangle)obj[i]).getLength())+"\nArea : "+(((Rectangle)obj[i]).getArea())+"\nPerimeter : "+(((Rectangle)obj[i]).getPerimeter()));
+                      }
+                case 4:{break;}
+
+           }
+           break;
+         }
+                 case 3:{
+                          String color;
+                          float side;
+                          
+                          System.out.println("No Argument constructor");
+                          obj[i] = new Square();
+                          System.out.println("Color : "+obj[i].getColor()+"\nSide :"+(((Square)obj[i]).getSide())+"\nArea : "+(((Square)obj[i]).getArea())+"\nPerimeter : "+(((Square)obj[i]).getPerimeter()));
+
+                          System.out.println("Single Argument constructor");
+                          System.out.print("Enter the Side : ");
+                          side = input.nextFloat();
+                          obj[i] = new Square(side);
+                          System.out.println("Color : "+obj[i].getColor()+"\nSide :"+(((Square)obj[i]).getSide())+"\nArea : "+(((Square)obj[i]).getArea())+"\nPerimeter : "+(((Square)obj[i]).getPerimeter()));
+
+                          System.out.println("Double Argument constructor");
+                          System.out.print("Enter the Side : ");
+                          side = input.nextFloat();
+                          System.out.print("Enter the color : ");
+                          color = input.next();
+                          obj[i] = new Square(side,color);
+                          System.out.println("Color : "+obj[i].getColor()+"\nSide :"+(((Square)obj[i]).getSide())+"\nArea : "+(((Square)obj[i]).getArea())+"\nPerimeter : "+(((Square)obj[i]).getPerimeter()));
+                          
+                          System.out.print("Changes Enter 1:color\t2:side\t3:exit : ");
+           int f;
+           f = input.nextInt();
+           switch(f)
+           {
+               case 1:{
+                         String m;
+                         System.out.print("Enter the change color");
+                         m = input.next();
+                         obj[i].setColor(m);
+                         System.out.println("Changed");
+                          System.out.println("Color : "+obj[i].getColor()+"\nSide :"+(((Square)obj[i]).getSide())+"\nArea : "+(((Square)obj[i]).getArea())+"\nPerimeter : "+(((Square)obj[i]).getPerimeter()));
+                         break;
+                      }
+                case 2:{
+                         int m;
+                         System.out.print("Enter the change side");
+                         m = input.nextInt();
+                         ((Square)obj[i]).setSide(m);
+                         System.out.println("Changed");
+                         System.out.println("Color : "+obj[i].getColor()+"\nSide :"+(((Square)obj[i]).getSide())+"\nArea : "+(((Square)obj[i]).getArea())+"\nPerimeter : "+(((Square)obj[i]).getPerimeter()));
+                         break;
+                      }
+                case 3:{break;}
+
+           }
+           break;
+         }
+                  default:{
+                          System.out.print("Not a valid option,Enter again");
+                          continue;
+                          }
+                 
+         }
+         i++;
+         System.out.print("Enter 0: to exit 1: to continue : ");
+         cont = input.nextInt();
+
+     }while(cont!=0);
+   }
+}
+
+/*
+output:
+
+Enter the shape	1:Circle	2:Rectangle	3:Square : 1
+No Argument constructor
+Color : red
+Radius :1.0
+Area : 3.14
+Perimeter : 6.28
+Single Argument constructor
+Enter the radius : 2
+Color : red
+Radius :2.0
+Area : 12.56
+Perimeter : 12.56
+Double Argument constructor
+Enter the radius : 2
+Enter the color : blue
+Color : blue
+Radius :2.0
+Area : 12.56
+Perimeter : 12.56
+Changes Enter 1:color	2:Radius	3:exit : 1
+Enter the change colorgreen
+Changed
+Color : green
+Radius :2.0
+Area : 12.56
+Perimeter : 12.56
+Enter 0: to exit 1: to continue : 1
+Enter the shape	1:Circle	2:Rectangle	3:Square : 2
+No Argument constructor
+Color : red
+Width :1.0
+Length :1.0
+Area : 1.0
+Perimeter : 2.0
+Double Argument constructor
+Enter the Width : 2
+Enter the length : 3
+Color : red
+Width :2.0
+Length :3.0
+Area : 6.0
+Perimeter : 12.0
+Triple Argument constructor
+Enter the Width : 2
+Enter the length : 3
+Enter the color : blue
+Color : blue
+Width :2.0
+Length :3.0
+Area : 6.0
+Perimeter : 12.0
+Changes Enter 1:color	2:width	3:length	4:exit : 2
+Enter the change Width3
+Changed
+Color : blue
+Width :3.0
+Length :3.0
+Area : 9.0
+Perimeter : 18.0
+Enter 0: to exit 1: to continue : 1
+Enter the shape	1:Circle	2:Rectangle	3:Square : 3
+No Argument constructor
+Color : red
+Side :0.0
+Area : 0.0
+Perimeter : 0.0
+Single Argument constructor
+Enter the Side : 2
+Color : red
+Side :2.0
+Area : 4.0
+Perimeter : 8.0
+Double Argument constructor
+Enter the Side : 3
+Enter the color : yellow
+Color : yellow
+Side :3.0
+Area : 9.0
+Perimeter : 12.0
+Changes Enter 1:color	2:side	3:exit : 2
+Enter the change side5
+Changed
+Color : yellow
+Side :5.0
+Area : 25.0
+Perimeter : 20.0
+Enter 0: to exit 1: to continue : 0
+
+
+
+*/

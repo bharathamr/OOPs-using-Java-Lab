@@ -1,0 +1,560 @@
+/*
+1. Write a java program with a class named ‘Box’ with following parameters name of the parcel,
+length, width and height and a function to calculate volume of box. Inherit a class named
+‘BoxWeight’ from ‘Box’ with an additional member weight of the box in grams. Inherit
+‘BoxShipment’ from ‘BoxWeight’ with an additional member shipmentcost per kilograms.
+Calculate the volume and cost for ‘n’ number of boxes on shipment and display in
+consolidated format. (Use Constructors)
+*/
+import java.util.*;
+
+class Box
+{
+   String par_name;
+   float length,width,height,volume;
+   
+   Box(String a,float b,float c,float d)
+   {
+      par_name = a;
+      length =b;
+      width = c;
+      height = d;
+   }
+
+   float calculate()
+   {
+        volume = length*width*height;
+        return 0;
+   }
+}
+
+class BoxWeight extends Box
+{
+   float weight;
+   BoxWeight(String a,float b,float c,float d,float e)
+   {
+       super(a,b,c,d);
+       weight = e/1000;
+   }
+
+}
+
+class BoxShipment extends BoxWeight
+{
+   float cost;
+   BoxShipment(String a,float b,float c,float d,float e,float f)
+   {
+       super(a,b,c,d,e);
+       cost = f*weight;
+   }
+   float total_cost()
+   {
+       return cost;
+   }
+   
+   void display()
+   {
+       System.out.println("name : "+par_name+"\nvolume : "+volume+"\nweight : " + weight + "kg\ncost : Rs "+cost);
+       System.out.println("\n");
+   }
+}
+
+class boxmain
+{
+   public static void main(String args[])
+   {
+        Scanner input = new Scanner(System.in);
+        int n;
+        float len,hei,wid,weigh,price,total = 0;
+        String name;
+        System.out.print("enter number of parcels : ");
+        n = input.nextInt();
+        BoxShipment []opt = new BoxShipment[n];
+        for(int i=0;i<n;i++)
+        {
+             input.nextLine();
+             System.out.print("enter name : ");
+             name = input.nextLine();
+             System.out.print("enter length of the box : ");
+             len = input.nextFloat();
+             System.out.print("enter width of the box : ");
+             wid = input.nextFloat();
+             System.out.print("enter height of the box : ");
+             hei = input.nextFloat();
+             System.out.print("enter weight of the box in grams : ");
+             weigh = input.nextFloat();
+             System.out.print("enter cost of the box per kilograms : ");
+             price = input.nextFloat();
+             opt[i] = new BoxShipment(name,len,wid,hei,weigh,price);
+        }
+        System.out.println("\n");
+        for(int j=0;j<n;j++)
+        {
+              opt[j].calculate();
+              total += opt[j].total_cost();
+              opt[j].display();
+        }
+        System.out.println("OVERALL COST : Rs "+total);
+   }
+}
+
+/*
+enter number of parcels : 3
+enter name : bharath 
+enter length of the box : 22
+enter width of the box : 24
+enter height of the box : 30
+enter weight of the box in grams : 900
+enter cost of the box per kilograms : 30
+enter name : kumar
+enter length of the box : 25
+enter width of the box : 27
+enter height of the box : 35
+enter weight of the box in grams : 1200.5
+enter cost of the box per kilograms : 50
+enter name : amr
+enter length of the box : 30
+enter width of the box : 32
+enter height of the box : 40
+enter weight of the box in grams : 1554
+enter cost of the box per kilograms : 60
+
+
+name : bharath
+volume : 15840.0
+weight : 0.9kg
+cost : Rs 27.0
+
+
+name : kumar
+volume : 23625.0
+weight : 1.2005kg
+cost : Rs 60.025
+
+
+name : amr
+volume : 38400.0
+weight : 1.554kg
+cost : Rs 93.24
+
+
+OVERALL COST : Rs 180.265
+
+*/
+
+/*
+2. Develop a java application with Employee class with Emp_name, Emp_id, Address, Mail_id,
+Mobile_no as members. Inherit the classes, Programmer, Assistant Professor, Associate
+Professor and Professor from employee class. Add Basic Pay (BP) as the member of all the
+inherited classes with 17% of BP as DA, 10 % of BP as HRA, 12% of BP as PF, 0.1% of BP
+for staff club fund. The allowance for Programmer is Rs2000, Assistant Professor is Rs5000,
+Associate Professor is Rs10000 and Professor is Rs15000. Calculate the salary as
+grosssalary=BP+DA+HRA and deductions=PF+staffclubfund. Calculate the
+netsalary=grosssalary-deductions. Generate pay slips for the employees with their gross and
+net salary.
+*/
+
+import java.util.*;
+class employee
+{
+   String Emp_name,address,Mail_id,Mobile_no;
+   int Emp_id;
+   double grosspay,deduction,netpay;
+   employee(String a,int b,String c,String d,String e)
+   {
+        Emp_name =a;
+        Emp_id =b;
+        address = c;
+        Mail_id = d;
+        Mobile_no = e;
+   }
+    void display()
+    {
+       System.out.println("Name : " + Emp_name + "\nID : " + Emp_id + "\nAddress : " + address + "\nMail ID : "+Mail_id + "\nMobile No : " + Mobile_no);
+       System.out.println("---------------------");
+       System.out.println("Grosspay : "+grosspay+"\nDeductions : "+deduction);
+       System.out.println("---------------------");
+       System.out.println("Netpay : "+netpay+"\n\n");
+   }
+}
+
+class programmer extends employee
+{
+  double basic_pay,da,hra,pf,scc;
+    programmer(String a,int b,String c,String d,String e,double f)
+    {
+        super(a,b,c,d,e);
+        basic_pay = f;
+        da = 0.17 * f;
+        hra = 0.1 * f;
+        pf = 0.12 * f;
+        scc = 0.001*f;
+        grosspay = basic_pay + da + hra + 2000;
+        deduction = pf + scc;
+        netpay = grosspay - deduction;
+    }
+}
+
+class associateprofessor extends employee
+{
+    double basic_pay,da,hra,pf,scc;
+    associateprofessor(String a,int b,String c,String d,String e,double f)
+    {
+        super(a,b,c,d,e);
+        basic_pay = f;
+        da = 0.17 * f;
+        hra = 0.1 * f;
+        pf = 0.12 * f;
+        scc = 0.001*f;
+        grosspay = basic_pay + da + hra + 5000;
+        deduction = pf + scc;
+        netpay = grosspay - deduction;
+    }
+}
+
+class assistantprofessor extends employee
+{
+    double basic_pay,da,hra,pf,scc;
+    assistantprofessor(String a,int b,String c,String d,String e,double f)
+    {
+        super(a,b,c,d,e);
+        basic_pay = f;
+        da = 0.17 * f;
+        hra = 0.1 * f;
+        pf = 0.12 * f;
+        scc = 0.001*f;
+        grosspay = basic_pay + da + hra + 10000;
+        deduction = pf + scc;
+        netpay = grosspay - deduction;
+    }
+}
+
+class professor extends employee
+{
+    double basic_pay,da,hra,pf,scc;
+    professor(String a,int b,String c,String d,String e,double f)
+    {
+        super(a,b,c,d,e);
+        basic_pay = f;
+        da = 0.17 * f;
+        hra = 0.1 * f;
+        pf = 0.12 * f;
+        scc = 0.001*f;
+        grosspay = basic_pay + da + hra + 15000;
+        deduction = pf + scc;
+        netpay = grosspay - deduction;
+    }
+
+}
+
+class netpay
+{
+   public static void main(String args[])
+   {
+       String name,add,mail,mob;
+       int id,n,op,count=0,count1=0,count2=0,count3=0;
+       double basic;
+       Scanner input = new Scanner(System.in);
+       System.out.print("Enter no of the emoployees : ");
+       n = input.nextInt();
+       programmer []opt = new programmer[n];
+       assistantprofessor []opt1 = new assistantprofessor[n];
+       associateprofessor []opt2 = new associateprofessor[n];
+       professor []opt3 = new professor[n];
+              for(int i=0;i<n;i++)
+       {
+            input.nextLine();
+            System.out.print("Enter the name : ");
+            name = input.nextLine();
+            System.out.print("Enter the id : ");
+            id = input.nextInt();
+            input.nextLine();
+            System.out.print("Enter the address : ");
+            add = input.nextLine();
+            System.out.print("Enter the mail id : ");
+            mail = input.nextLine();
+            System.out.print("Enter the mobile no : ");
+            mob = input.nextLine();
+            System.out.print("Enter the basic pay : ");
+            basic = input.nextDouble();
+            System.out.println("Enter designation as\n1: programmer\n2: assistantprofessor\n3: associateprofessor\n4: professor");
+            op = input.nextInt();
+            switch(op)
+            {
+                 case 1 :{
+                            opt[count++] = new programmer(name,id,add,mail,mob,basic);
+                            break;
+                         }
+                 case 2 :{
+                            opt1[count1++] = new assistantprofessor(name,id,add,mail,mob,basic);
+                            break;
+                         }
+                 case 3 :{
+                            opt2[count2++] = new associateprofessor(name,id,add,mail,mob,basic);
+                            break;
+                         }
+                 case 4 :{
+                            opt3[count3++] = new professor(name,id,add,mail,mob,basic);
+                            break;
+                         }
+                 
+            }
+            
+       }  
+       for(int j =0; j< count;j++)
+              opt[j].display();
+            for(int k =0; k< count1;k++)
+              opt1[k].display();
+            for(int l =0; l< count2;l++)
+              opt2[l].display();
+            for(int m =0; m< count3;m++)
+              opt3[m].display();     
+   }
+}
+
+/*
+output:
+Enter no of the emoployees : 2
+Enter the name : bharath
+Enter the id : 12
+Enter the address : chennai
+Enter the mail id : amr@gmail.com
+Enter the mobile no : 8228228220
+Enter the basic pay : 15000
+Enter designation as
+1: programmer
+2: assistantprofessor
+3: associateprofessor
+4: professor
+2
+Enter the name : kumar
+Enter the id : 32
+Enter the address : kanchipuram
+Enter the mail id : kum@gmail.com
+Enter the mobile no : 9229229220
+Enter the basic pay : 30000
+Enter designation as
+1: programmer
+2: assistantprofessor
+3: associateprofessor
+4: professor
+4
+Name : bharath
+ID : 12
+Address : chennai
+Mail ID : amr@gmail.com
+Mobile No : 8228228220
+---------------------
+Grosspay : 29050.0
+Deductions : 1815.0
+---------------------
+Netpay : 27235.0
+
+
+Name : kumar
+ID : 32
+Address : kanchipuram
+Mail ID : kum@gmail.com
+Mobile No : 9229229220
+---------------------
+Grosspay : 53100.0
+Deductions : 3630.0
+---------------------
+Netpay : 49470.0
+
+
+*/
+
+/*
+3. Write a java program with a class named ‘Person’ which consists of name, age, DOB and
+address. Have functions to get input and calculate_performance. Derive a class named
+‘Student’ from ‘Person’ class with additional members like department, marks, extracurricular.
+Calculate performance of Student (Outstanding, Excellent, Good, Fair) based on
+the grade and extra-curricular activities. Derive a class named ‘Professor’ from ‘Person’ with
+additional members like department, number of publications and funded projects. Calculate
+performance of Professor based on the number of publications and funded projects. In main
+get ‘n’ number of Person’s information and calculate the performance.
+*/
+
+import java.util.*;
+
+class Person
+{
+  String name,address,grade,dep,dob;
+  int age;
+
+  void input(String a,int b,String c,String d)
+  {
+          name = a;
+          age = b;
+          dob = c;
+          address = d;
+  }
+
+  void calculate_performance(int s)
+  {
+        if(s > 90)
+          grade = "Outstanding";
+        else if(s > 80)
+          grade ="Excellent";
+        else if(s > 70)
+          grade = "Good";
+        else if(s > 50)
+          grade = "Fair";
+        else
+          grade = "Not Fair";
+  }
+
+  void display()
+  {
+    System.out.println("Name : "+name+"\nAge : "+age+"\nDOB : "+dob+"\nAddress : "+address+"\ndepartment : "+dep);
+    System.out.println("------------");
+    System.out.println("Grade : "+ grade);
+  }
+}
+
+class student extends Person
+{
+  String department;
+  int mark,extra_curricular,sum;
+    student(String a,int b,String c,String d,String e,int f,int g)
+    {
+          input( a, b, c, d);
+          department = e;
+          mark = f;
+          extra_curricular = g;
+          dep =department;
+        sum = (mark + extra_curricular)/2;
+        calculate_performance(sum);
+    }
+}
+
+class professor extends Person
+{
+  String department;
+  int publications,funded_projects,sum;
+  professor(String a,int b,String c,String d,String e,int f,int g)
+    {
+          input(a, b, c, d);
+          department = e;
+          publications = f;
+          funded_projects = g ;
+          dep =department;
+          sum = (publications + funded_projects)/2;
+          calculate_performance(sum);
+    }
+}
+
+class studentre
+{
+  public static void main(String []args)
+  {
+    String name,department,address,dob;
+    int age,mark,extra,pc,fp,n,d,count =0,count1 = 0;
+        Scanner input = new Scanner(System.in);
+    System.out.println("Enter number of persons");
+        n = input.nextInt();
+        student []obj = new student[n];
+        professor []obj1 = new professor[n];
+        for(int i=0; i<n ; i++)
+        {
+          input.nextLine();
+          System.out.print("Enter name : ");
+          name = input.nextLine();
+          System.out.print("Enter age : ");
+          age = input.nextInt();
+          input.nextLine();
+          System.out.print("Enter dob in ddmmyyyy : ");
+          dob = input.nextLine();
+          System.out.print("Enter address : ");
+          address = input.nextLine();
+          System.out.println("Enter\n1: for student\n2: for professor");
+            d = input.nextInt();
+            input.nextLine();
+            if(d == 1)
+            {
+              System.out.print("Enter department : ");
+              department = input.nextLine();
+              System.out.print("Enter the mark out of 100 : ");
+              mark = input.nextInt();
+              System.out.print("Enter the extra_curricular out of 100 : ");
+              extra = input.nextInt();
+              obj[count++] = new student(name,age,dob,address,department,mark,extra);
+            }
+            else
+            {
+              if(d == 2)
+              {
+                System.out.print("Enter department : ");
+                  department = input.nextLine();
+                System.out.print("Enter the number of publication points out of 100 : ");
+                pc = input.nextInt();
+                System.out.print("Enter the funded project points out of 100 : ");
+                fp = input.nextInt();
+                obj1[count1++] = new professor(name,age,dob,address,department,pc,fp);
+
+              }
+              else
+              {
+                System.out.println("Invalid option\n");
+                break;
+              }
+            }
+
+        }
+
+        System.out.println("The record of students: \n");
+        for(int i = 0;i<count;i++)
+          obj[i].display();
+        System.out.println("The record of professors : \n");
+        for(int i = 0;i<count1;i++)
+          obj1[i].display();
+  }
+}
+
+/*
+output:
+
+Enter number of persons
+2
+Enter name : bharath
+Enter age : 20
+Enter dob in ddmmyyyy : 22041999
+Enter address : chennai
+Enter
+1: for student
+2: for professor
+1
+Enter department : cse
+Enter the mark out of 100 : 90
+Enter the extra_curricular out of 100 : 95
+Enter name : kumar
+Enter age : 45
+Enter dob in ddmmyyyy : 15031974
+Enter address : kanchipuram
+Enter
+1: for student
+2: for professor
+2
+Enter department : mech
+Enter the number of publication points out of 100 : 80
+Enter the funded project points out of 100 : 85
+The record of students:
+
+Name : bharath
+Age : 20
+DOB : 22041999
+Address : chennai
+department : cse
+------------
+Grade : Outstanding
+The record of professors :
+
+Name : kumar
+Age : 45
+DOB : 15031974
+Address : kanchipuram
+department : mech
+------------
+Grade : Excellent
+*/

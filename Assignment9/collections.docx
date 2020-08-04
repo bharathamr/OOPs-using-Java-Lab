@@ -1,0 +1,550 @@
+/*Collections 1*/
+import java.util.*;
+
+class DoublyLinked
+{
+	LinkedList<Integer> str = new LinkedList<Integer>();
+	Scanner input=new Scanner(System.in);
+	void AppendOnBoth()
+	{
+		int a,b;
+		System.out.print("Enter the Element1 : ");
+		a = input.nextInt();
+		str.addFirst(a);
+		System.out.print("Enter the Element2 : ");
+		b = input.nextInt();
+		str.addLast(b);
+		System.out.println("-------APPENDED ON BOTH SIDES-------");
+	}
+
+	void RemoveOnBoth()
+	{
+		str.removeFirst();
+		str.removeLast();
+		System.out.println("-------REMOVED ON BOTH SIDES-------");
+	}
+
+
+	void Append()
+	{
+		int i;
+		int a;
+		System.out.print("Enter the index where you want to insert the Element : ");
+		i = input.nextInt();
+		System.out.print("Enter the Element : ");
+		a = input.nextInt();
+		str.add(i,a);
+		System.out.println("-------APPENDED ON PARTICULAR POSITION-------");
+	}
+
+	void remove()
+	{
+		int i;
+		System.out.print("Enter the Position of the Element to be removed : ");
+		i = input.nextInt();
+		if( i == -1)
+			System.out.print("Linked List Empty\n");
+		else
+		{
+			str.remove(i);
+			System.out.println("-------REMOVED -------");
+		}
+	}
+
+	int Search(int a)
+	{
+		return str.indexOf(a);
+	}
+
+	void display()
+	{
+		System.out.println("The Elements in Forward Order are : ");
+		for(int i=0;i<str.size();i++)
+		{
+			System.out.println(str.get(i));
+		}
+
+		System.out.println("\nThe Elements in Reverse Order are : ");
+		for(int i=str.size()-1;i>=0;i--)
+		{
+			System.out.println(str.get(i));
+		}
+	}
+
+	void sort()
+	{
+		Collections.sort(str);
+		System.out.println("-------SORTED-------");
+	}
+
+
+
+	void replace()
+	{
+		int a,b;
+		System.out.print("Enter the Element to be replaced : ");
+		a = input.nextInt();
+		System.out.print("Enter the new Element: ");
+		b = input.nextInt();
+		int i = Search(a);
+		if( i == -1)
+			System.out.print("Linked List Empty\n");
+		else
+		{
+			str.set(i,b);
+			System.out.println("-------REPLACED-------");
+		}
+
+	}
+
+	void removeDuplicate()
+	{
+		LinkedList <Integer> list = new LinkedList<Integer>();
+		for(int i=0;i<str.size();i++)
+			if(!list.contains(str.get(i)))
+				list.add(str.get(i));
+		str = list;
+		System.out.println("-------REMOVED DUPLICATE-------");
+	}
+
+}
+
+class Collection1
+{
+	public static void main(String args[])
+	{
+		Scanner scan=new Scanner(System.in);
+		DoublyLinked s=new DoublyLinked();
+		System.out.println("\n------------- Linked List Menu -------------\n1. Append on both sides\n2. Delete on both sides\n3. Append at particular position\n4. Remove at particular position\n5. Search\n6. Display in Forward and Reverse order\n7. Sort the LinkedList\n8. Replace an element\n9. Remove duplicate elements\n10. Exit");
+		while(true)
+		{
+			System.out.print("\nEnter the operation to be performed: ");
+			int op;
+			op=scan.nextInt();
+			if(op == 10)
+			{
+				System.out.println("\nExiting...");
+				break;
+			}
+			switch(op)
+			{
+				case 1: s.AppendOnBoth();
+					break;
+				case 2: s.RemoveOnBoth();
+					break;
+				case 3: s.Append();
+					break;
+				case 4: s.remove();
+					break;
+				case 5: int a;
+					System.out.print("Enter Element to be searched: ");
+					a = scan.nextInt();
+					int index=s.Search(a);
+					System.out.println("The string is found at position "+index);
+					break;
+				case 6: s.display();
+					break;
+				case 7: s.sort();
+					break;
+				case 8: s.replace();
+					break;
+				case 9: s.removeDuplicate();
+					break;
+				default : System.out.println("\nInvalid Choice! Enter again.");
+			}
+		}
+	}
+}
+
+/*
+output : 
+
+
+------------- Linked List Menu -------------
+1. Append on both sides
+2. Delete on both sides
+3. Append at particular position
+4. Remove at particular position
+5. Search
+6. Display in Forward and Reverse order
+7. Sort the LinkedList
+8. Replace an element
+9. Remove duplicate elements
+10. Exit
+
+Enter the operation to be performed: 1
+Enter the Element1 : 5
+Enter the Element2 : 6
+-------APPENDED ON BOTH SIDES-------
+
+Enter the operation to be performed: 6
+The Elements in Forward Order are : 
+5
+6
+
+The Elements in Reverse Order are : 
+6
+5
+
+Enter the operation to be performed: 3
+Enter the index where you want to insert the Element : 1
+Enter the Element : 7
+-------APPENDED ON PARTICULAR POSITION-------
+
+Enter the operation to be performed: 2
+-------REMOVED ON BOTH SIDES-------
+
+Enter the operation to be performed: 6
+The Elements in Forward Order are : 
+7
+
+The Elements in Reverse Order are : 
+7
+
+Enter the operation to be performed: 1
+Enter the Element1 : 8
+Enter the Element2 : 9
+-------APPENDED ON BOTH SIDES-------
+
+Enter the operation to be performed: 6
+The Elements in Forward Order are : 
+8
+7
+9
+
+The Elements in Reverse Order are : 
+9
+7
+8
+
+Enter the operation to be performed: 4
+Enter the Position of the Element to be removed : 1
+-------REMOVED -------
+
+Enter the operation to be performed: 3
+Enter the index where you want to insert the Element : 2
+Enter the Element : 2
+-------APPENDED ON PARTICULAR POSITION-------
+
+Enter the operation to be performed: 6
+The Elements in Forward Order are : 
+8
+9
+2
+
+The Elements in Reverse Order are : 
+2
+9
+8
+
+Enter the operation to be performed: 7
+-------SORTED-------
+
+Enter the operation to be performed: 6
+The Elements in Forward Order are : 
+2
+8
+9
+
+The Elements in Reverse Order are : 
+9
+8
+2
+
+Enter the operation to be performed: 8
+Enter the Element to be replaced : 2
+Enter the new Element: 8
+-------REPLACED-------
+
+Enter the operation to be performed: 6
+The Elements in Forward Order are : 
+8
+8
+9
+
+The Elements in Reverse Order are : 
+9
+8
+8
+
+Enter the operation to be performed: 9
+-------REMOVED DUPLICATE-------
+
+Enter the operation to be performed: 6
+The Elements in Forward Order are : 
+8
+9
+
+The Elements in Reverse Order are : 
+9
+8
+
+Enter the operation to be performed: 10
+
+Exiting...
+
+
+*/
+
+
+/*Collections 2*/
+import java.util.*;
+
+class Movie
+{
+	String name,actor,gender;
+	int year;
+	float rating;
+	Scanner input = new Scanner(System.in);
+	void input()
+	{
+		System.out.print("Enter the movie name : ");
+		name = input.next();
+		System.out.print("Enter the actor name : ");
+		actor = input.next();
+		System.out.print("Enter the gender : ");
+		gender = input.next();
+		System.out.print("Enter the year : ");
+		year = input.nextInt();
+		System.out.print("Enter the rating : ");
+		rating = input.nextFloat();
+
+	}
+
+	void display()
+	{
+		System.out.println("\n\nMovie name : "+name+"\nActor Name : "+actor+"\nGender : "+gender+"\nYear : "+year+"\nRating : "+rating+"\n\n");
+
+	}
+
+}
+
+class Collection2
+{
+	public static void main(String []args)
+	{
+		LinkedList<Movie> queue = new LinkedList<Movie>();
+		Scanner input = new Scanner(System.in);
+		System.out.println("Enter\n1 : Add a movie at last\n2 : Remove movie from front\n3 : Display in Queue\n4 : Display based on ratings\n5 : Display based on Release Date\n6 : exit");
+		while(true)
+		{
+			int choice;
+			System.out.print("Enter choice : ");
+			choice = input.nextInt();
+			if(choice == 6)
+			{
+				System.out.println("Exiting.......");
+				break;
+			}
+			switch(choice)
+			{
+				case 1:{
+						Movie a = new Movie();
+						a.input();
+						queue.add(a);
+						break;
+					}
+				case 2:{
+						queue.remove();
+						break;
+					}
+				case 3:{
+						for(int i=0;i<queue.size();i++)
+						{
+							queue.get(i).display();
+						}
+						break;
+					}
+				case 4:{
+						LinkedList<Movie> queue1 = new LinkedList<Movie>();
+						int count =0;
+						for(int i=0;i<queue.size()-1;i++)
+						{
+							Movie max = queue.get(i);
+							for(int j=i+1;j<queue.size();j++)
+							{
+								if( max.rating < queue.get(j).rating)
+								{
+									Movie temp = max;
+									max = queue.get(j);
+									queue1.add(i,max);
+									queue1.add(j,temp);
+									count = 1;
+								}
+							}
+							if(count == 0)
+							{
+								queue1.add(i,max);
+							}
+							else
+							{
+								count = 0;
+							}
+						}
+						System.out.println("Displaying in rating order");
+						for(int i=0;i<queue1.size();i++)
+						{
+							queue1.get(i).display();
+						}
+						break;
+					}
+				case 5:{
+						LinkedList<Movie> queue1 = new LinkedList<Movie>();
+						int count = 0;
+						for(int i=0;i<queue.size()-1;i++)
+						{
+							Movie max = queue.get(i);
+							for(int j=i+1;j<queue.size();j++)
+							{
+								if( max.year < queue.get(j).year)
+								{
+									Movie temp = max;
+									max = queue.get(j);
+									queue1.add(i,max);
+									queue1.add(j,temp);
+									count = 1;
+								}
+								
+							}
+
+							if(count == 0)
+							{
+								queue1.add(i,max);
+							}
+							else
+							{
+								count = 0;
+							}
+						}
+						System.out.println("Displaying in year order");
+						for(int i=0;i<queue1.size();i++)
+						{
+							queue1.get(i).display();
+						}
+						break;
+					}
+
+				}
+
+			} 
+		}
+	}
+
+/*
+output : 
+
+Enter
+1 : Add a movie at last
+2 : Remove movie from front
+3 : Display in Queue
+4 : Display based on ratings
+5 : Display based on Release Date
+6 : exit
+Enter choice : 1
+Enter the movie name : mersal
+Enter the actor name : vijay
+Enter the gender : male
+Enter the year : 2018
+Enter the rating : 8.5
+Enter choice : 1
+Enter the movie name : ajith
+Enter the actor name : ajith
+Enter the gender : male
+Enter the year : 2016
+Enter the rating : 8.1
+Enter choice : 1
+Enter the movie name : ayan
+Enter the actor name : surya
+Enter the gender : male
+Enter the year : 2017
+Enter the rating : 8.3
+Enter choice : 3
+
+
+Movie name : mersal
+Actor Name : vijay
+Gender : male
+Year : 2018
+Rating : 8.5
+
+
+
+
+Movie name : ajith
+Actor Name : ajith
+Gender : male
+Year : 2016
+Rating : 8.1
+
+
+
+
+Movie name : ayan
+Actor Name : surya
+Gender : male
+Year : 2017
+Rating : 8.3
+
+
+Enter choice : 5
+Displaying in year order
+
+
+Movie name : mersal
+Actor Name : vijay
+Gender : male
+Year : 2018
+Rating : 8.5
+
+
+
+
+Movie name : ayan
+Actor Name : surya
+Gender : male
+Year : 2017
+Rating : 8.3
+
+
+
+
+Movie name : ajith
+Actor Name : ajith
+Gender : male
+Year : 2016
+Rating : 8.1
+
+
+Enter choice : 4
+Displaying in rating order
+
+
+Movie name : mersal
+Actor Name : vijay
+Gender : male
+Year : 2018
+Rating : 8.5
+
+
+
+
+Movie name : ayan
+Actor Name : surya
+Gender : male
+Year : 2017
+Rating : 8.3
+
+
+
+
+Movie name : ajith
+Actor Name : ajith
+Gender : male
+Year : 2016
+Rating : 8.1
+
+
+Enter choice : 6
+
+
+*/

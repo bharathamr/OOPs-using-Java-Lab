@@ -1,0 +1,635 @@
+import java.util.*;
+interface Stack
+{
+    int MAX = 15;
+    boolean isFull();
+    boolean isEmpty();
+    void push(char element);
+    char pop();
+    char peep();
+}
+
+class substack implements Stack
+{
+    int top = -1;
+    char []array = new char[100];
+    public boolean isFull()
+    {
+        if(top == MAX-1)
+            return true;
+        else
+            return false;
+    }
+    public boolean isEmpty()
+    {
+        if(top == -1)
+            return true;
+        else
+            return false;
+    }
+    public void push(char element)
+    {
+        if(isFull())
+            System.out.println("Stack Full");
+        else
+            array[++top] = element;
+    }
+    public char pop()
+    {
+         if(isEmpty())
+         {
+             System.out.println("Stack Empty");
+             return '\0';
+         }
+         else
+         {
+             char s; 
+             s = peep();
+             top--;
+             return s;
+         }
+
+    }
+    public char peep()
+    {
+        if(isEmpty())
+         {
+             System.out.println("Stack Empty");
+             return '\0';
+         }
+         else
+            return array[top];
+    }
+
+    public boolean balanceParanthesis(String expression)
+    {
+        for(int i=0;i<expression.length();i++)
+        {
+            if(expression.charAt(i) == '{' || expression.charAt(i) == '(' || expression.charAt(i) == '[')
+            	push(expression.charAt(i));
+            else
+            {
+                 if(expression.charAt(i) == '}' || expression.charAt(i) == ')' || expression.charAt(i) == ']')
+                 {
+               		switch(expression.charAt(i))
+               		{
+                    		case '}' :
+				{
+                                        if(isEmpty())
+                                            return false;
+                                 	while(pop() != '{')
+                                 	{
+                                     		continue;
+                                 	}
+                                 	break;
+                               	}
+                      		case ']' :
+				{
+					if(isEmpty())
+                                            return false;
+                                 	while(pop() != '[')
+                                 	{
+                                     		continue;
+                                 	}
+                                 	break;
+                               	}
+                        	case ')' :
+				{
+					if(isEmpty())
+                                            return false;
+                                 	while(pop() != '(')
+                                 	{
+                                     		continue;
+                                 	}
+                                 	break;
+                               	}
+
+               		    }
+
+           		}
+
+        	}
+      	}
+        if(isEmpty())
+		return true;
+        else
+                return false;
+      }
+      boolean checkTwoStacks(substack s1,substack s2)
+      {
+         while(!s1.isEmpty() && !s2.isEmpty() )
+         {
+             if(s1.pop() != s2.pop())
+                 return false;
+         }
+         if(s1.isEmpty() && s2.isEmpty())
+		return true;
+         else
+		return false;
+      }
+}
+
+class mainstack
+{
+   public static void main(String []args)
+   {
+        Scanner input = new Scanner(System.in);
+        substack obj = new substack();
+        substack c1 = new substack();
+        substack c2 = new substack();
+          String s1,s2;
+        System.out.print("Enter the expression1 : ");
+        s1 = input.nextLine();
+	System.out.print("Enter the expression2 : ");
+        s2 = input.nextLine();
+	if(obj.balanceParanthesis(s1))
+		System.out.println("The given expression1 has balanced paranthesis");
+        else
+        {
+               	System.out.println("The given expression1 has unbalanced paranthesis");
+        }
+        if(obj.balanceParanthesis(s2))
+		System.out.println("The given expression2 has balanced paranthesis");
+         else
+        {
+               	System.out.println("The given expression2 has unbalanced paranthesis");
+        }
+
+        for(int i=0;i<s1.length();i++)
+               c1.push(s1.charAt(i));
+        for(int i=0;i<s2.length();i++)
+               c2.push(s2.charAt(i));
+        if(obj.checkTwoStacks(c1,c2))
+                System.out.println("The given two stacks are equal");
+        else
+		System.out.println("The given two stacks are not equal"); 
+	
+   }
+}
+
+/*
+output:
+
+Enter the expression1 : (2+3)
+Enter the expression2 : (2+3)
+The given expression1 has balanced paranthesis
+The given expression2 has balanced paranthesis
+The given two stacks are equal
+
+Enter the expression1 : (2+3)
+Enter the expression2 : (2+3
+The given expression1 has balanced paranthesis
+The given expression2 has unbalanced paranthesis
+The given two stacks are not equal
+
+Enter the expression1 : (2+3
+Enter the expression2 : (2+3
+The given expression1 has unbalanced paranthesis
+The given expression2 has unbalanced paranthesis
+The given two stacks are equal
+
+*/
+
+
+
+
+
+import java.util.*;
+interface Vehicle
+{
+	String getName();
+	void setName(String a);
+	int getMaxPassengers();
+	void setMaxPassengers(int a);
+	int getMaxSpeed();
+	void setMaxSpeed(int a);
+}
+
+interface LandVehicle extends Vehicle
+{
+	int getNumWheels();
+	void setNumWheels(int a);
+	void drive();
+}
+
+interface SeaVehicle extends Vehicle
+{
+	int getDisplacement();
+	void setDisplacement(int a);
+	void launch();        
+}
+
+class Jeep implements LandVehicle
+{
+	private String name;
+	private int MaxPassengers,MaxSpeed,NumWheels;
+	public String getName()
+	{
+		return name;
+	}
+	public void setName(String a)
+	{
+		name = a;
+	}
+	public int getMaxPassengers()
+	{
+		return MaxPassengers;
+	}
+	public void setMaxPassengers(int a)
+	{
+		MaxPassengers = a;
+	}
+	public int getMaxSpeed()
+	{
+		return MaxSpeed;
+	}
+	public void setMaxSpeed(int a)
+	{
+		MaxSpeed = a;
+	}
+	public int getNumWheels()
+	{
+		return NumWheels;
+	}
+	public void setNumWheels(int a)
+	{
+		NumWheels = a;
+	}
+        public void drive()
+	{
+		System.out.println("DRIVE YOUR LAND VEHICLE");
+	}
+        void soundHorn()
+	{
+		System.out.println("Please make sound horn");
+	}
+
+}
+
+class Frigate implements SeaVehicle
+{
+	private String name;
+	private int MaxPassengers,MaxSpeed,Displacement;
+	public String getName()
+	{
+		return name;
+	}
+	public void setName(String a)
+	{
+		name = a;
+	}
+	public int getMaxPassengers()
+	{
+		return MaxPassengers;
+	}
+	public void setMaxPassengers(int a)
+	{
+		MaxPassengers = a;
+	}
+	public int getMaxSpeed()
+	{
+		return MaxSpeed;
+	}
+	public void setMaxSpeed(int a)
+	{
+		MaxSpeed = a;
+	}
+	public int getDisplacement()
+	{
+		return Displacement;
+	}
+	public void setDisplacement(int a)
+	{
+		Displacement = a;
+	}
+        public void launch()
+	{
+		System.out.println("LAUNCH YOUR SEA VEHICLE");
+	}
+        void firegun()
+	{
+		System.out.println("Please shoot firegun to give signal");
+	}
+}
+
+class HoverCraft implements SeaVehicle,LandVehicle
+{
+	private String name;
+	private int MaxPassengers,MaxSpeed,Displacement,NumWheels;
+	public String getName()
+	{
+		return name;
+	}
+	public void setName(String a)
+	{
+		name = a;
+	}
+	public int getMaxPassengers()
+	{
+		return MaxPassengers;
+	}
+	public void setMaxPassengers(int a)
+	{
+		MaxPassengers = a;
+	}
+	public int getMaxSpeed()
+	{
+		return MaxSpeed;
+	}
+	public void setMaxSpeed(int a)
+	{
+		MaxSpeed = a;
+	}
+	public int getDisplacement()
+	{
+		return Displacement;
+	}
+	public void setDisplacement(int a)
+	{
+		Displacement = a;
+	}
+        public int getNumWheels()
+	{
+		return NumWheels;
+	}
+	public void setNumWheels(int a)
+	{
+		NumWheels = a;
+	}
+        public void drive()
+	{
+		System.out.println("DRIVE YOUR LAND VEHICLE");
+	}
+        void soundHorn()
+	{
+		System.out.println("Please make sound horn");
+	}
+        public void launch()
+	{
+		System.out.println("LAUNCH YOUR SEA VEHICLE");
+	}
+        void firegun()
+	{
+		System.out.println("Please shoot firegun to give signal");
+	}
+	void enterLand()
+	{
+		System.out.println("you entered land mode");
+	}
+        void enterSea()
+	{
+		System.out.println("you entered sea mode");
+	}
+}
+
+interface EmergencyVehicle
+{
+	void soundSiren();
+}
+
+class Ambulance implements LandVehicle,EmergencyVehicle
+{
+	private String name;
+	private int MaxPassengers,MaxSpeed,NumWheels;
+	public String getName()
+	{
+		return name;
+	}
+	public void setName(String a)
+	{
+		name = a;
+	}
+	public int getMaxPassengers()
+	{
+		return MaxPassengers;
+	}
+	public void setMaxPassengers(int a)
+	{
+		MaxPassengers = a;
+	}
+	public int getMaxSpeed()
+	{
+		return MaxSpeed;
+	}
+	public void setMaxSpeed(int a)
+	{
+		MaxSpeed = a;
+	}
+	public int getNumWheels()
+	{
+		return NumWheels;
+	}
+	public void setNumWheels(int a)
+	{
+		NumWheels = a;
+	}
+        public void drive()
+	{
+		System.out.println("DRIVE YOUR LAND VEHICLE");
+	}
+        public void soundSiren()
+	{
+		System.out.println("Switch on your Sound Siren for Emergency alert");
+	}
+        void PatientIn()
+	{
+		System.out.println("Alert!! patient inside the ambulance");
+	}
+}
+
+class mainvehicle
+{
+	public static void main(String []args)
+	{
+		Scanner input = new Scanner(System.in);
+                String n;
+                int mp,ms,nw,d,option,cont;
+                do
+		{
+			System.out.print("Enter your name : ");
+			n = input.next();
+			System.out.print("Enter max passenger : ");
+			mp = input.nextInt();
+			System.out.print("Enter max speed : ");
+			ms = input.nextInt();
+			System.out.print("Enter \n1:JEEP\n2:FRIGATE\n3:HOVERCRAFT\n4:AMBULANCE\nChoice  : ");
+                        option = input.nextInt();
+                        switch(option)
+			{
+				case 1:{
+					System.out.print("Enter number of wheels : ");
+					nw = input.nextInt();
+					Jeep obj = new Jeep();
+					obj.setName(n);
+					obj.setMaxPassengers(mp);
+					obj.setMaxSpeed(ms);
+					obj.setNumWheels(nw);
+					System.out.println("\n");
+					System.out.println("Name : "+obj.getName()+"\nMaximum Passeneger :"+obj.getMaxPassengers()+"\nMaximum Speed :"+obj.getMaxSpeed()+"\nNumber of wheels :"+obj.getNumWheels());
+					obj.drive();
+                                        obj.soundHorn();
+					System.out.println("\n");
+					break;	
+					}
+				case 2:{
+					System.out.print("Enter Displacement : ");
+					d = input.nextInt();
+					Frigate obj = new Frigate();
+					obj.setName(n);
+					obj.setMaxPassengers(mp);
+					obj.setMaxSpeed(ms);
+					obj.setDisplacement(d);
+					System.out.println("\n");
+					System.out.println("Name : "+obj.getName()+"\nMaximum Passeneger :"+obj.getMaxPassengers()+"\nMaximum Speed :"+obj.getMaxSpeed()+"\nDisplacement :"+obj.getDisplacement());
+					obj.launch();
+                                        obj.firegun();
+                                        System.out.println("\n");
+					break;	
+					}
+				case 3:{
+					System.out.print("Enter number of wheels : ");
+					nw = input.nextInt();
+					System.out.print("Enter Displacement : ");
+					d = input.nextInt();
+					HoverCraft obj = new HoverCraft();
+					obj.setName(n);
+					obj.setMaxPassengers(mp);
+					obj.setMaxSpeed(ms);
+					obj.setNumWheels(nw);
+					obj.setDisplacement(d);
+					System.out.println("\n");
+					System.out.println("Name : "+obj.getName()+"\nMaximum Passeneger :"+obj.getMaxPassengers()+"\nMaximum Speed :"+obj.getMaxSpeed()+"\nNumber of wheels :"+obj.getNumWheels()+"\nDisplacement :"+obj.getDisplacement());
+					obj.drive();
+                                        obj.soundHorn();
+					obj.launch();
+                                        obj.firegun();
+					obj.enterLand();
+					obj.enterSea();
+					System.out.println("\n");
+					break;	
+					}
+				case 4:{
+					System.out.print("Enter number of wheels : ");
+					nw = input.nextInt();
+					Ambulance obj = new Ambulance();
+					obj.setName(n);
+					obj.setMaxPassengers(mp);
+					obj.setMaxSpeed(ms);
+					obj.setNumWheels(nw);
+					System.out.println("\n");
+					System.out.println("Name : "+obj.getName()+"\nMaximum Passeneger :"+obj.getMaxPassengers()+"\nMaximum Speed :"+obj.getMaxSpeed()+"\nNumber of wheels :"+obj.getNumWheels());
+					obj.drive();
+					obj.soundSiren();
+					obj.PatientIn();
+					System.out.println("\n");
+					break;	
+					}
+				default:{
+					System.out.println("Sorry you have entered the wrong choice!!! please try again ");
+					}
+				
+			}
+			System.out.print("Enter 0:to exit 1:to continue : ");
+			cont = input.nextInt();
+		}while(cont !=0);
+                
+	}
+}
+
+/*
+output:
+
+Enter your name : bharath
+Enter max passenger : 4
+Enter max speed : 60
+Enter 
+1:JEEP
+2:FRIGATE
+3:HOVERCRAFT
+4:AMBULANCE
+Choice  : 1
+Enter number of wheels : 4
+
+
+Name : bharath
+Maximum Passeneger :4
+Maximum Speed :60
+Number of wheels :4
+DRIVE YOUR LAND VEHICLE
+Please make sound horn
+
+
+Enter 0:to exit 1:to continue : 1
+Enter your name : kumar
+Enter max passenger : 6
+Enter max speed : 70
+Enter 
+1:JEEP
+2:FRIGATE
+3:HOVERCRAFT
+4:AMBULANCE
+Choice  : 2
+Enter Displacement : 30
+
+
+Name : kumar
+Maximum Passeneger :6
+Maximum Speed :70
+Displacement :30
+LAUNCH YOUR SEA VEHICLE
+Please shoot firegun to give signal
+
+
+Enter 0:to exit 1:to continue : 1
+Enter your name : ezhil
+Enter max passenger : 6
+Enter max speed : 80
+Enter 
+1:JEEP
+2:FRIGATE
+3:HOVERCRAFT
+4:AMBULANCE
+Choice  : 3
+Enter number of wheels : 3
+Enter Displacement : 50
+
+
+Name : ezhil
+Maximum Passeneger :6
+Maximum Speed :80
+Number of wheels :3
+Displacement :50
+DRIVE YOUR LAND VEHICLE
+Please make sound horn
+LAUNCH YOUR SEA VEHICLE
+Please shoot firegun to give signal
+you entered land mode
+you entered sea mode
+
+
+Enter 0:to exit 1:to continue : 1
+Enter your name : hari
+Enter max passenger : 1
+Enter max speed : 100 
+Enter 
+1:JEEP
+2:FRIGATE
+3:HOVERCRAFT
+4:AMBULANCE
+Choice  : 4
+Enter number of wheels : 4
+
+
+Name : hari
+Maximum Passeneger :1
+Maximum Speed :100
+Number of wheels :4
+DRIVE YOUR LAND VEHICLE
+Switch on your Sound Siren for Emergency alert
+Alert!! patient inside the ambulance
+
+
+Enter 0:to exit 1:to continue : 0
+
+
+*/

@@ -1,0 +1,532 @@
+/*Generic*/
+/*1. Write a java program to create a generic stack and perform the operations.*/
+
+import java.util.*;
+
+class amstrong
+{
+   int sum,number;
+   String str;
+   public amstrong(String str)
+   {
+        int a,count = 0,mult =1;
+        number = Integer.parseInt(str);
+        for(int j=number;j>0;j=j/10)
+           count++;
+        for(int i=number;i>0;i=i/10)
+        { 
+              a = i%10;
+              mult =1;
+              for(int k=0;k<count;k++)
+                 mult*=a;
+              sum += mult ;
+        }
+   }
+   public void display()
+   {
+	if(sum == number)
+		System.out.println(number + " is a amstrong");
+	else
+		System.out.println(number + " is not a amstrong");
+   }
+
+}
+
+class stack<T>
+{
+	int max = 15;
+	int top =0;
+	ArrayList<T> arr = new ArrayList<T> ();
+	
+	boolean isFull()
+	{
+		if(top == 15)
+			return true;
+		return false;
+	}
+
+	boolean isEmpty()
+	{
+		if(top == 0)
+			return true;
+		return false;
+	}
+
+	void push(T a)
+	{
+		if(isFull())
+		{
+			System.out.println("Stack is Full");
+			return;
+		}
+		arr.add(a);
+		top++;
+	}
+	
+	T pop()
+	{
+		if(isEmpty())
+		{
+			System.out.println("Stack is Empty");
+		}
+		else
+		{
+			T temp;
+			temp = peep();
+			arr.remove(top-1);
+			top--;
+			return temp;
+		}
+		return null;
+	}
+	T peep()
+	{
+		if(isEmpty())
+		{
+			System.out.println("Stack is Empty");
+			return null;
+		}
+		T temp;
+		temp = arr.get(top-1);
+		return temp;
+	}
+}
+
+class Generic2
+{
+	public static void main(String []args)
+	{
+		Scanner input = new Scanner(System.in);
+		int choice,cont,cont1,i;
+		do
+		{
+			System.out.print("1 : Integer Stack\n2 : String Stack\n3 : Object Stack\nYour choice : ");
+			choice = input.nextInt();
+			i = 0;
+			switch(choice)
+			{
+				case 1:{
+					stack<Integer> s=new stack<Integer> ();
+					int a;
+					do
+					{
+						System.out.print("Enter the integer element : ");
+						a = input.nextInt();
+						s.push(a);
+						System.out.print("Enter 1 : to continue 0 : to exit : ");
+						cont1 = input.nextInt();
+						i++;
+					}while(cont1 !=0 );
+					System.out.println("\nThe elements are : ");
+					for(int j=0;j<i;j++)
+					{
+						System.out.println(s.pop());
+					}
+					break;
+					}
+
+				case 2:{
+					stack<String> s=new stack<String> ();
+					String a;
+					do
+					{
+						System.out.print("Enter the String : ");
+						a = input.next();
+						s.push(a);
+						System.out.print("Enter 1 : to continue 0 : to exit : ");
+						cont1 = input.nextInt();
+						i++;
+					}while(cont1 !=0 );
+					System.out.println("\nThe elements are : ");
+					for(int j=0;j<i;j++)
+					{
+						System.out.println(s.pop());
+					}
+					break;
+					}
+				case 3:{
+					stack<amstrong> s=new stack<amstrong> ();
+					String a;
+					do
+					{
+						System.out.print("Enter the number : ");
+						a = input.next();
+						amstrong obj = new amstrong(a);
+						s.push(obj);
+						System.out.print("Enter 1 : to continue 0 : to exit : ");
+						cont1 = input.nextInt();
+						i++;
+					}while(cont1!=0);
+					System.out.println("\nThe object values are : ");
+					for(int j=0;j<i;j++)
+					{
+						amstrong obj;
+						obj = s.pop();
+						obj.display();
+					}
+					break;
+					}
+			}
+			System.out.print("Enter 1 : to continue 0 : to exit : ");
+			cont = input.nextInt();
+
+		}while(cont !=0 );
+		
+	}
+}
+
+/*
+1 : Integer Stack
+2 : String Stack
+3 : Object Stack
+Your choice : 1
+Enter the integer element : 1
+Enter 1 : to continue 0 : to exit : 1
+Enter the integer element : 2
+Enter 1 : to continue 0 : to exit : 1
+Enter the integer element : 3
+Enter 1 : to continue 0 : to exit : 0
+
+The elements are : 
+3
+2
+1
+Enter 1 : to continue 0 : to exit : 1
+1 : Integer Stack
+2 : String Stack
+3 : Object Stack
+Your choice : 2
+Enter the String : amr
+Enter 1 : to continue 0 : to exit : 1
+Enter the String : kumar
+Enter 1 : to continue 0 : to exit : 1
+Enter the String : bharath
+Enter 1 : to continue 0 : to exit : 0
+
+The elements are : 
+bharath
+kumar
+amr
+Enter 1 : to continue 0 : to exit : 1
+1 : Integer Stack
+2 : String Stack
+3 : Object Stack
+Your choice : 3
+Enter the number : 153
+Enter 1 : to continue 0 : to exit : 1
+Enter the number : 178
+Enter 1 : to continue 0 : to exit : 1
+Enter the number : 223
+Enter 1 : to continue 0 : to exit : 0
+
+The object values are : 
+223 is not a amstrong
+178 is not a amstrong
+153 is a amstrong
+Enter 1 : to continue 0 : to exit : 0
+
+
+
+*/
+
+/*Write a java program to find the maximum value from the given type of elements using a
+generic function.*/
+
+import java.util.*;
+
+class Maximum
+{
+	public <T extends Comparable> T max(T []a)
+	{
+		T maxi = a[0];
+		for(T val : a)
+		{
+			if(val.compareTo(maxi) > 0)
+				maxi = val;
+		}
+		return maxi;
+	}
+
+}
+
+class Generic1
+{
+	public static void main(String []args)
+	{
+		Scanner input = new Scanner(System.in);		
+		int choice,cont;
+		do
+		{
+			System.out.println("1:Integer\n2:String\n3:Double\nYour Choice : ");
+			choice = input.nextInt();
+			switch(choice)
+			{
+				case 1:{
+					int cont1 = 0;
+					Maximum obj = new Maximum();
+					System.out.print("Total number of elements : ");
+					cont1 = input.nextInt();
+					Integer a[] = new Integer[cont1];
+					int i=0;
+					System.out.print("Enter the Integer Elements : \n");
+					do
+					{
+						int b;
+						b = input.nextInt();
+						a[i] = b;
+					}while(++i<cont1);
+					System.out.println("Maximum Number : "+obj.<Integer>max(a));
+					break;
+					}
+
+				case 2:{
+					int cont1 = 0;
+					Maximum obj = new Maximum();
+					System.out.print("Total number of String : ");
+					cont1 = input.nextInt();
+					String a[] = new String[cont1];
+					int i=0;
+					System.out.print("Enter the Strings : \n");
+					do
+					{
+						String b;
+						b = input.next();
+						a[i] = b;
+					}while(++i<cont1);
+					System.out.println("Maximum String : "+obj.<String>max(a));
+					break;
+					}
+				case 3:{
+					int cont1 = 0;
+					Maximum obj = new Maximum();
+					System.out.print("Total number of elements : ");
+					cont1 = input.nextInt();
+					Double a[] = new Double[cont1];
+					int i=0;
+					System.out.print("Enter the Double Elements : \n");
+					do
+					{
+						double b;
+						b = input.nextDouble();
+						a[i] = b;
+					}while(++i<cont1);
+					System.out.println("Maximum element : "+obj.<Double>max(a));
+					break;
+					}
+			}
+			System.out.print("Enter 1:to continue 0: to exit : ");
+			cont = input.nextInt();
+		}while(cont!=0);
+		
+	}
+}
+
+/*
+output : 
+
+1:Integer
+2:String
+3:Double
+Your Choice : 
+1
+Total number of elements : 5
+Enter the Integer Elements : 
+55
+66
+77
+99
+88
+Maximum Number : 99
+Enter 1:to continue 0: to exit : 1
+1:Integer
+2:String
+3:Double
+Your Choice : 
+2
+Total number of String : 3
+Enter the Strings : 
+Kumar
+bharath
+amr
+Maximum String : bharath
+Enter 1:to continue 0: to exit : 1
+1:Integer
+2:String
+3:Double
+Your Choice : 
+3
+Total number of elements : 5
+Enter the Double Elements : 
+10.7
+10.3
+10.9
+9.9
+10.1
+Maximum element : 10.9
+Enter 1:to continue 0: to exit : 0
+
+
+*/
+
+/*3:Perform a sorting operation on various types of elements using generic method.*/
+
+import java.util.*;
+
+class sort
+{
+	public <T extends Comparable> void sorting(T []a)
+	{
+		for(int val=0;val<a.length;val++)
+		{
+			for(int k = val+1;k<a.length;k++)
+			{
+				if(a[val].compareTo(a[k]) > 0)
+				{
+					T s;
+					s = a[val];
+					a[val] = a[k];
+					a[k] = s;
+				}
+			}
+		}
+		System.out.println("The Sorted Order : ");
+		for(T i:a)
+		{	
+			System.out.println(i);
+		}
+	}
+
+}
+
+class Generic3
+{
+	public static void main(String []args)
+	{
+		Scanner input = new Scanner(System.in);		
+		int choice,cont;
+		do
+		{
+			System.out.println("1:Integer\n2:String\n3:Double\nYour Choice : ");
+			choice = input.nextInt();
+			switch(choice)
+			{
+				case 1:{
+					int cont1 = 0;
+					sort obj = new sort();
+					System.out.print("Total number of elements : ");
+					cont1 = input.nextInt();
+					Integer a[] = new Integer[cont1];
+					int i=0;
+					System.out.print("Enter the Integer Elements : \n");
+					do
+					{
+						int b;
+						b = input.nextInt();
+						a[i] = b;
+					}while(++i<cont1);
+					obj.<Integer>sorting(a);
+					break;
+					}
+
+				case 2:{
+					int cont1 = 0;
+					sort obj = new sort();
+					System.out.print("Total number of String : ");
+					cont1 = input.nextInt();
+					String a[] = new String[cont1];
+					int i=0;
+					System.out.print("Enter the Strings : \n");
+					do
+					{
+						String b;
+						b = input.next();
+						a[i] = b;
+					}while(++i<cont1);
+					obj.<String>sorting(a);
+					break;
+					}
+				case 3:{
+					int cont1 = 0;
+					sort obj = new sort();
+					System.out.print("Total number of elements : ");
+					cont1 = input.nextInt();
+					Double a[] = new Double[cont1];
+					int i=0;
+					System.out.print("Enter the Double Elements : \n");
+					do
+					{
+						double b;
+						b = input.nextDouble();
+						a[i] = b;
+					}while(++i<cont1);
+					obj.<Double>sorting(a);
+					break;
+					}
+			}
+			System.out.print("Enter 1:to continue 0: to exit : ");
+			cont = input.nextInt();
+		}while(cont!=0);
+		
+	}
+}
+
+/*
+output : 
+
+1:Integer
+2:String
+3:Double
+Your Choice : 
+1
+Total number of elements : 5
+Enter the Integer Elements : 
+66
+99
+88
+55
+44
+The Sorted Order : 
+44
+55
+66
+88
+99
+Enter 1:to continue 0: to exit : 1
+1:Integer
+2:String
+3:Double
+Your Choice : 
+2
+Total number of String : 3
+Enter the Strings : 
+bharth
+kumar
+amr
+The Sorted Order : 
+amr
+bharth
+kumar
+Enter 1:to continue 0: to exit : 1
+1:Integer
+2:String
+3:Double
+Your Choice : 
+3
+Total number of elements : 5
+Enter the Double Elements : 
+10.9
+10.1
+10.6
+10.3
+10.7
+The Sorted Order : 
+10.1
+10.3
+10.6
+10.7
+10.9
+Enter 1:to continue 0: to exit : 0
+
+
+
+*/

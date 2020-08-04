@@ -1,0 +1,501 @@
+/*5 1.*/
+import java.util.*;
+import java.lang.*;
+
+class MinorCitizenException extends Exception
+{
+      String message;
+      public MinorCitizenException(String a)
+	{
+		message = a;
+	}
+
+}
+class Person
+{
+
+    Scanner input = new Scanner(System.in);
+    String name,age,aadhar;
+    void getInput()
+	{
+		System.out.print("Enter your Name : ");
+		name = input.next();
+		try
+		{
+			System.out.print("Enter your age : ");
+		        age = input.next();
+			int i = 0;
+			while(i<age.length())
+			{
+				int a = (age.charAt(i));
+				if(a> 64 && a < 91)
+					throw new NumberFormatException("Age contains characters");
+				else
+				{
+				    if(a > 96 && a<123)
+					throw new NumberFormatException("Age contains characters");
+                                }
+                                i++;
+			}
+			System.out.print("Enter your Aadhar no : ");
+			aadhar = input.next();
+			display();
+			canVote();
+		}
+		catch(NumberFormatException e)
+		{
+			System.out.println("Age contains characters");
+
+		}
+		
+	}
+
+    void display()
+	{
+		System.out.println("\n----------\n");
+		System.out.println("Name : "+name+"\nAge : "+age+"\nAadhar : "+aadhar);
+		System.out.println("\n----------\n");
+	}
+
+    void canVote()
+	{
+		try
+		{
+			int a = Integer.parseInt(age);
+			if(a < 18)
+				throw new MinorCitizenException("Not eligible to vote");
+			else
+				System.out.println("Eligible to vote");
+			hasAadhar();
+                }
+		catch(MinorCitizenException e)
+		{
+				System.out.println(e.message);
+		}
+	}
+
+    void hasAadhar()
+	{
+		try
+		{
+			if(aadhar.length() != 12)
+				throw new NullPointerException("Not has aadhar");
+			else
+				System.out.println("has aadhar");
+
+		}
+		catch(NullPointerException e)
+		{
+			System.out.println(e.getMessage());
+
+		}
+
+
+	}
+
+}
+
+class Test
+{
+     public static void main(String []args)
+    {
+	
+	Person obj = new Person();
+	obj.getInput();
+      }
+
+}
+/*
+output:
+
+Enter your Name : bharath
+Enter your age : 34
+Enter your Aadhar no : 572859024860
+
+----------
+
+Name : bharath
+Age : 34
+Aadhar : 572859024860
+
+----------
+
+Eligible to vote
+has aadhar
+cs1034@u23:~/Desktop$ java Test 
+Enter your Name : bharath
+Enter your age : b1
+Age contains characters
+cs1034@u23:~/Desktop$ java Test 
+Enter your Name : bharath
+Enter your age : 16
+Enter your Aadhar no : 728
+
+----------
+
+Name : bharath
+Age : 16
+Aadhar : 728
+
+----------
+
+Not eligible to vote
+cs1034@u23:~/Desktop$ java Test 
+Enter your Name : bharath
+Enter your age : 19
+Enter your Aadhar no : 728
+
+----------
+
+Name : bharath
+Age : 19
+Aadhar : 728
+
+----------
+
+Eligible to vote
+Not has aadhar
+
+
+*/
+
+
+/*5 2.*/
+import java.util.*;
+
+class PANRequiredException extends Exception
+{
+	Scanner input = new Scanner(System.in);
+	String pan;
+	PANRequiredException(String a)
+	{
+		System.out.println(a);
+		System.out.print("Enter PAN Number : ");
+		pan = input.next();
+	}
+}
+
+class NotEnoughMoneyInAccountException extends Exception
+{
+	String msg;
+	NotEnoughMoneyInAccountException(String a)
+	{
+		msg = a;
+	}
+}
+
+class MinBalRequiredException extends Exception
+{
+	String msg;
+	MinBalRequiredException(String a)
+	{
+		msg = a;
+	}
+}
+
+class BranchNotFoundException extends Exception
+{
+	Scanner input = new Scanner(System.in);
+	String br;
+	BranchNotFoundException(String a)
+	{
+		System.out.print("\n"+a+"\nEnter the valid branch such as CHENNAI,KANCHIPURAM,KALAVAKKAM,CHENGALPATTU,THIRUVALLUR : ");
+		br = input.next();
+	}
+}
+
+class PANFormatMismatchException extends Exception
+{
+	Scanner input = new Scanner(System.in);
+	String pan;
+	PANFormatMismatchException(String a)
+	{
+		System.out.print("\n"+a+"\nEnter a valid pan number : ");
+		pan = input.next();
+	}
+}
+
+class AccountNotFoundException extends Exception
+{
+	String message;
+	AccountNotFoundException(String a)
+	{
+		message = a;
+	}
+
+}
+class Account
+{
+	int acct_num,balance;
+	String branch,PAN_num;
+	Account(int a,String b,int c,String d)
+	{
+		acct_num = a;
+		branch = b;
+		balance = c;
+		PAN_num = d;
+	}
+	void deposit(int money)
+	{
+	     try
+		{
+			if(money > 25000)
+				throw new PANRequiredException("PAN Required");
+			else
+			{
+				System.out.println("\nAmount Deposited\n");
+				balance += money;
+			}
+		}
+		catch(PANRequiredException e)
+		{
+			if((e.pan).equals(PAN_num))
+			{
+				System.out.println("\namount deposited\n");
+				balance += money;
+			}
+			else
+				System.out.println("\nyou cannot deposit\n");
+		}
+	}
+
+	void withdrawal(int money)
+	{
+		try
+		{
+		if(money > balance)
+		{
+			throw new NotEnoughMoneyInAccountException("\nNot Enough Amount");
+		}
+		else
+		{
+			if((balance - money) < 5000)
+				throw new MinBalRequiredException("\nMinimum balance required");
+			else
+			{
+				System.out.println("\nyou are withdrawal is processed\n");
+				balance -= money;			
+			}
+		}
+		}
+		catch(NotEnoughMoneyInAccountException e)
+		{
+
+			System.out.println(e.msg+"\n");
+		}
+		catch(MinBalRequiredException e)
+		{
+			System.out.println(e.msg+"\n");
+		}
+
+	}
+}
+
+class Accountmain 
+{
+   public static void main(String []args)
+   {
+	int acc_no,bal,choice = 0,cont1 = 0;
+	String branch,pan;
+	Scanner input = new Scanner(System.in);
+	Account []acc = new Account[100];
+	int i = 0,cont = 0;
+	do
+	{
+		System.out.print("Enter the Account Number : ");
+		acc_no = input.nextInt();
+		System.out.print("Enter the Branch : ");
+		branch = input.next();
+		System.out.print("Enter the Balance : ");
+		bal = input.nextInt();
+		System.out.print("Enter the PAN number : ");
+		pan = input.next();
+		try
+		{
+			if(branch.equals("chennai") || branch.equals("kanchipuram") || branch.equals("chengalpattu") || branch.equals("kalavakkam") || branch.equals("thiruvallur"))
+			{
+				System.out.println("Branch matched");
+			}
+			else
+			{
+				throw new BranchNotFoundException("Branch not found");
+			}
+		}
+		catch(BranchNotFoundException e)
+		{
+			branch = e.br;
+		}
+		try
+		{
+			if(pan.length() == 10)
+			{
+				int count = 0,count1 = 0;
+				for(int k=0; k<5;k++)
+				{
+					if(pan.charAt(k) > 64 && pan.charAt(k) < 91 || pan.charAt(k) > 96 && pan.charAt(k) < 123)
+						count++;
+				}
+				if(count == 5)
+				{
+					for(int j=5; j < 9;j++)
+				{
+					if(pan.charAt(j) > 64 && pan.charAt(j) < 91 || pan.charAt(j) > 96 && pan.charAt(j) < 123)
+						count1 = 0;
+					else
+						count1++;
+				}
+				}
+				else
+					throw new PANFormatMismatchException("PAN Format Mismatched");
+				if(count1 == 4)
+				{
+					if(pan.charAt(9) > 64 && pan.charAt(9) < 91 || pan.charAt(9) > 96 && pan.charAt(9) < 123)
+					{
+						System.out.println("PAN Format matched");
+					}
+					else
+						throw new PANFormatMismatchException("PAN Format Mismatched");
+				}
+				else
+					throw new PANFormatMismatchException("PAN Format Mismatched");
+			}
+			else
+				throw new PANFormatMismatchException("PAN Format Mismatched");
+		}
+
+		catch(PANFormatMismatchException e)
+		{
+			pan = e.pan;
+		}
+		acc[i] = new Account(acc_no,branch,bal,pan);
+		i++;
+		System.out.println("Enter 1:to continue 0 : to exit");
+		cont = input.nextInt();
+	}while(cont !=0);
+	do
+	{
+
+	System.out.println("Enter 1 : for deposit\t2 : for withdrawal\t3 : for searching account : ");
+	choice = input.nextInt();
+	switch(choice)
+	{
+		case 1:{
+				int a,b;
+				System.out.print("Enter the account no : ");
+				a = input.nextInt();
+				System.out.print("Enter the amount to be deposited : ");
+				b = input.nextInt();
+				for(int l=0;l<i;l++)
+				{
+					if(acc[l].acct_num == a)
+						acc[l].deposit(b);
+				}
+				break;
+			}
+
+		case 2:{
+				int a,b;
+				System.out.print("Enter the account no : ");
+				a = input.nextInt();
+				System.out.print("Enter the amount to withdraw : ");
+				b = input.nextInt();
+				for(int l=0;l<i;l++)
+				{
+					if(acc[l].acct_num == a)
+						acc[l].withdrawal(b);
+				}
+				break;
+			}
+		case 3:{
+				int a,b;
+				System.out.print("Enter the account no to be searched : ");
+				a = input.nextInt();
+				try
+				{
+					for(int l=0;l<i;l++)
+					{
+						if(acc[l].acct_num == a)
+						{
+							System.out.println("Account number found\n");
+							System.out.println("------ACCOUNT DETAILS------");
+							System.out.println("Account No : "+acc[l].acct_num+"\nBranch : "+acc[l].branch+"\nBalance : "+acc[l].balance+"\nPan No : "+acc[l].PAN_num+"\n");
+							break;
+						}
+						else
+							throw new AccountNotFoundException("Account number not found");
+					}
+				}
+				catch(AccountNotFoundException e)
+				{
+					System.out.println(e.message+"\n");
+				}
+				break;
+			}
+		}
+		System.out.print("Enter 1 : to continue 0 : to exit : ");
+		cont1 = input.nextInt();
+		}while(cont1 != 0);
+
+   }
+}
+
+/*
+Enter the Account Number : 13456
+Enter the Branch : chennai
+Enter the Balance : 70000
+Enter the PAN number : fghjkl8907
+Branch matched
+
+PAN Format Mismatched
+Enter a valid pan number : fghjk9087l
+Enter 1:to continue 0 : to exit
+1
+Enter the Account Number : 45678
+Enter the Branch : kalavakkam
+Enter the Balance : 69000
+Enter the PAN number : FGHJK7890K
+Branch matched
+PAN Format matched
+Enter 1:to continue 0 : to exit
+1
+Enter the Account Number : 78906
+Enter the Branch : neyveli
+Enter the Balance : 80000
+Enter the PAN number : fghjk5678j
+
+Branch not found
+Enter the valid branch such as CHENNAI,KANCHIPURAM,KALAVAKKAM,CHENGALPATTU,THIRUVALLUR : thiruvallur
+PAN Format matched
+Enter 1:to continue 0 : to exit
+0
+Enter 1 : for deposit	2 : for withdrawal	3 : for searching account : 
+1
+Enter the account no : 78906
+Enter the amount to be deposited : 3000
+
+Amount Deposited
+
+Enter 1 : to continue 0 : to exit : 1
+Enter 1 : for deposit	2 : for withdrawal	3 : for searching account : 
+2
+Enter the account no : 45678
+Enter the amount to withdraw : 60000
+
+you are withdrawal is processed
+
+Enter 1 : to continue 0 : to exit : 1
+Enter 1 : for deposit	2 : for withdrawal	3 : for searching account : 
+3
+Enter the account no to be searched : 13456
+Account number found
+
+------ACCOUNT DETAILS------
+Account No : 13456
+Branch : chennai
+Balance : 70000
+Pan No : fghjk9087l
+
+Enter 1 : to continue 0 : to exit : 0
+
+
+*/

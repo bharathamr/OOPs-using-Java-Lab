@@ -1,0 +1,154 @@
+Exercise 1 a: Basic Java Programs (24,26,27 June 2019)
+
+Write a java program to check whether the given number is odd or even.
+
+class oddoreven
+{
+  public static void main(String args[])
+  {
+    int a;
+    a = Integer.parseInt(args[0]);
+    if(a%2 == 0) System.out.println("the given number "+a+" is even");
+    else System.out.println("the given number "+a+" is odd");
+  }
+
+}
+
+/*
+output :
+dell@amr:~/Desktop/bharath$ java oddoreven 8
+the given number 8 is even
+*/
+
+Write a java program to find the factorial of the given number.
+
+class factorial
+{
+   public static void main(String args[])
+   {
+        int number,factsum = 1;
+        number = Integer.parseInt(args[0]);
+        for(int i=1;i<=number;i++)
+              factsum *=i;
+        System.out.println("the factorial of given number "+number+" is "+factsum);
+
+
+   }
+
+}
+
+/*
+output:
+dell@amr:~/Desktop/bharath$ java factorial 5
+the factorial of given number 5 is 120
+*/
+
+
+Write a java program to find the sum of first ‘n’ natural numbers.
+
+class naturalnumber
+{
+   public static void main(String args[])
+   {
+        int number,sum = 0;
+        number = Integer.parseInt(args[0]);
+        for(int i=1;i<=number;i++)
+              sum +=i;
+        System.out.println("the sum of given number "+number+" is "+sum);
+
+
+   }
+
+}
+
+/*
+output:
+dell@amr:~/Desktop/bharath$ java naturalnumber 5
+the sum of given number 5 is 15
+
+*/
+
+
+Write a java program to find whether the given number is Armstrong number or not.
+
+class amstrong
+{
+   public static void main(String args[])
+   {
+        int number,a,sum = 0,count = 0,mult =1;
+        number = Integer.parseInt(args[0]);
+        for(int j=number;j>0;j=j/10)
+           count++;
+        for(int i=number;i>0;i=i/10)
+        { 
+              a = i%10;
+              mult =1;
+              for(int k=0;k<count;k++)
+                 mult*=a;
+              sum += mult ;
+        }
+     
+        if (sum == number) System.out.println("the given number is amstrong");
+        else System.out.println("the given number is not amstrong");
+
+   }
+
+}
+/*
+output:
+
+dell@amr:~/Desktop/bharath$ java amstrong 1634
+the given number is amstrong
+
+*/
+
+Write a java program to create a class named ‘Student’ with name, id, dept, 3 marks
+as data members. Write function to assign the inputs, calculate grade, display and
+search.
+
+class student
+{
+   public static void main(String args[])
+   {
+        String name,dept,search_dept,grade;
+        int id,mark1,mark2,mark3,total,search_roll;
+        name = args[0];
+        id = Integer.parseInt(args[1]);
+        dept = args[2];
+        search_roll = Integer.parseInt(args[6]);
+        search_dept = args[7];
+        mark1 = Integer.parseInt(args[3]);
+        mark2 = Integer.parseInt(args[4]);
+        mark3 = Integer.parseInt(args[5]);
+        total = (mark1 + mark2 + mark3)/3;
+        if(total > 90) grade = "O";
+        else if(total>80) grade = "A+";
+        else if(total>70) grade = "A";
+        else if(total>60) grade = "B+";
+        else if(total>50) grade = "B";
+        else grade = "RA";
+        System.out.println("the name is "+name);
+        System.out.println("the id is "+id);
+        System.out.println("the dept is "+dept);
+        System.out.println("the grade is "+grade);
+        if(search_roll == id) System.out.println("the given id matches");
+        else System.out.println("the given id not matches");
+        if(search_dept.equals(dept)) System.out.println("the given dept matches");
+        else System.out.println("the given dept not matches");
+        
+   }
+
+}
+
+/*
+output:
+
+dell@amr:~/Desktop/bharath$ java student bharath 001 CSE 90 80 89 002 cse
+the name is bharath
+the id is 1
+the dept is CSE
+the grade is A+
+the given id not matches
+the given dept not matches
+
+*/
